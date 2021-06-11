@@ -1,0 +1,22 @@
+                                             Question 2 Explanation
+
+Command to Compile (not link) :
+        gcc -S add.c -o add.s -lm  
+
+
+-S : To stop execution at compiling phase
+-lm : to link <Math.h> with add.c because the math functions in math.h have implementations 
+      in libm.so (or libm.a for static linking), and libm is not linked in by default.
+      So to use math functions it is necessary. 
+
+
+Erros - None 
+
+Warnings - 
+    1) return type defaults to ‘int’ : Return type of function add has not been declared,
+                                       so default return type of add function is 'int'.
+        
+    2) implicit declaration of function ‘round’ : function round has not been defined, still we are calling it.
+    3) incompatible implicit declaration of built-in function ‘round’: function 'round' is already present int <Math.h>.
+                                                                       So either include <Math.h> or 
+                                                                       provide a declaration of function 'round'.

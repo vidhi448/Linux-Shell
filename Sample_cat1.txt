@@ -1,0 +1,34 @@
+                                              Question 1 Explanation
+
+files - checkifgreater.asm , Greater.c
+
+NOTE : CHANGE THE FUNCTION NAME OF _start AS IT IS HAS MULTIPLE DEFINITIONS IN ASSEMBLY LIBRARIES. OTHERWISE 
+       ERROR WILL ARISE DUE TO MULTIPLE DEFINITIONS.
+
+Explanation for checkifgreater.asm (ASM FILE) -
+       global _start: I declared _start as global, so that the kernel knows that execution begins from _start function.
+       macro write : this macro takes message and message lenght as input and prints it using system call
+       function _start : calls function checkifgreater
+       function checkGreater :  takes 2 integers as input and finds the greater number, if x>y then prints "1", else "0"            
+
+Explanation for Greater.c (C FILE)-
+       This function simply calls the function checkGreater from the assembly file.
+
+Linking both the files -
+       ERROR:
+       Both the files get compiled(not link) separately  but there is an ERROR IN LINKING.
+       gcc checkifgreater.o Greater.o -o a.out
+       Greater.o: In function `main':
+       Greater.c:(.text+0x6e): undefined reference to `checkGreater'
+       collect2: error: ld returned 1 exit status
+       Makefile:10: recipe for target 'linking' failed
+       make: *** [linking] Error 1
+
+
+BOTH THE FILES DO NOT WORK TOGETHER (ERROR IN LINKING) BECAUSE -
+       A program can have only one entry point. In this assembly program the only entry point is _start as
+       _start was declared as global. Declaring _start as global tells the kernel where the program execution begins.
+       When we call checkGreater function from main() function of C program, the assembly program does not give it the 
+       access as its execution should begin with _start not checkGreater. 
+       In order to solve this either call _start in the main() function of C program or make checkGreater function global.
+
